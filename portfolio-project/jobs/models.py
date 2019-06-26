@@ -9,4 +9,3 @@ class Job(models.Model):
 						      unique=True, 
 						      blank=True
 						    )
-

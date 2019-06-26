@@ -25,14 +25,14 @@ SECRET_KEY = 'fe79)y1@1)yc_ux7s-*7@^*06spapdl7oyd_wr6%(vo&ylpl5k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mfmeza231.us-west-2.elasticbeanstalk.com', 'mezanet.mfmeza.info']
+ALLOWED_HOSTS = ['localhost', 'mfmeza231.us-west-2.elasticbeanstalk.com', 'mezanet.mfmeza.info']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'jobs.apps.JobsConfig',
-    'blog.apps.BlogConfig',
+    'meme.apps.MemeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

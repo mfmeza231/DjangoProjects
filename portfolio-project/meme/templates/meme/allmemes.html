@@ -2,12 +2,13 @@
 <!doctype html>
 <html lang="en">
   <head>
+    {% load staticfiles %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Frankie's Website</title>
+    <title>IoT Project</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
 
@@ -37,15 +38,15 @@
   <body>
     <header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Frankie Meza</a>
+  <a class="navbar-brand" href="{% url 'home' %}">Matthew Meza</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link active" href="#">Twitter</a>
-      <a class="nav-item nav-link" href="#">Resume</a>
-      <a class="nav-item nav-link active" href="#">Blog</a>
+      <a class="nav-item nav-link" href="https://github.com/mfmeza231">GitHub</a>
+      <a class="nav-item nav-link" href="{% static 'Matthew_Meza_Resume.pdf' %}">Resume</a>
+      <a class="nav-item nav-link active" href="{% url 'allmemes' %}">Iot Example</a>
     </div>
   </div>
 </nav>
@@ -53,23 +54,12 @@
 
 <main role="main">
   <div class="container">
-	  <h1 class="text-center pt-3">Welcome to Frankie's Blog</h1>
+	  <h1 class="text-center pt-3">IoT Meme Project</h1>
+    <p>This is the classic AWS Meme Generator project that can be found at https://acloud.guru/series/acg-projects/view/104. The project is designed to post a meme to a Slack chat everytime an AWS IoT Dashbutton is pressed. This project instead posts the meme here to my website. The additional services required include AWS IoT, Lambda and Kinesis. AWS IoT is used to register the AWS Dashbutton to my AWS account. A Lambda function was created to handle the Dashbutton click event which then generates a meme. Finally, Kinesis handles routing the meme to my PosgreSQL Database in RDS. </p>
 	  <br />
 	  <br />
-	  <h2>Latest Posts</h2>
+	  <h2>Latest Memes</h2>
 	  <hr></hr>
-	   {% for blog in blogs.all %}
-		<div class="media">
-		  <img src="{{ blog.image.url }}" class="align-self-center mr-3" alt="...">
-		  <div class="media-body">
-		    <a href=""><h5 class="mt-0">{{ blog.title }}</h5></a>
-		    <p>{{ blog.pub_date }}</p>
-		    <p class="mb-0">{{ blog.summary }}</p>
-		  </div>
-		</div>
-		<br />
-	  	<br />
-        {% endfor %}
   </div>
 </main>
 
@@ -78,7 +68,7 @@
     <p class="float-right">
       <a href="#">Back to top</a>
     </p>
-    <p>Copyright Frankie Meza {% now "Y" %}</p>
+    <p>Copyright Matthew Meza {% now "Y" %}</p>
   </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
