@@ -41,6 +41,31 @@
         height: 100%;
         width: 100%;
       }
+
+      .hero-text {
+        text-align: center;
+        position: relative;
+        color: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .hero-text button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 10px 25px;
+        color: black;
+        background-color: #ddd;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .hero-text button:hover {
+        background-color: #555;
+        color: white;
+      }
     </style>
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
@@ -54,7 +79,8 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link active" href="https://github.com/mfmeza231">GitHub</a>
+      <a class="nav-item nav-link active" href="{% url 'home' %}">Home</a>
+      <a class="nav-item nav-link" href="https://github.com/mfmeza231">GitHub</a>
       <a class="nav-item nav-link" href="{% static 'Matthew_Meza_Resume.pdf' %}">Resume</a>
       <a class="nav-item nav-link" href="{% url 'allmemes' %}">IoT Project</a>
     </div>
@@ -66,7 +92,7 @@
 
   <section class="jumbotron text-center" >
     <div class="tdStyle" style="height:639px; max-width:90%; margin:auto">
-      <table style="max-width:1444px; height:100%; background-color:rgba(46, 49, 49, 0.4); margin:auto">
+      <table style="max-width:1444px; height:100%; background-color:rgba(0, 0, 0, 0.5); margin:auto">
         <tr valign="top">
           <td>
             <h1 class="jumbotron-heading" style="color:white;">Matthew Meza</h1>
@@ -83,6 +109,16 @@
       </table>
     </div>
   </section>
+
+  <div class="container">
+    <a href="{% url 'allmemes' %}">
+      <h1 class="text-center pt-3">IoT Meme Project</h1>
+      <br />
+      <hr></hr>
+      <img style="width: 100%; height: 100%;"src="{% static 'AWS_IoT_Project_Services.png' %}" />
+      <br />
+    </a>
+  </div>
 
   <div class="album py-5 bg-light">
     <div class="container">
@@ -102,6 +138,22 @@
       </div>
     </div>
   </div>
+
+    <div class="tdStyle" style="height:550px; max-width:100%; margin:auto; background: url('{% static 'Matthew_Meza_Resume.png' %}'); background-position: center top;">
+      <div style="width:100%; height:100%; background-color:rgba(0, 0, 0, 0.6);">
+          <div class="hero-text">
+            <h1 style="font-size:50px">My Resume</h1>
+            <tr>
+              <td>
+                <a href="{% static 'Matthew_Meza_Resume.png' %}" class="btn btn-primary my-2">View</a>
+                <a href="{% static 'Matthew_Meza_Resume.png' %}" class="btn btn-primary my-2" download>Download</a>
+              </td>
+            </tr>
+          </div>
+      </div>
+    </div>
+  <br />
+  <br />
 </main>
 
 <footer class="text-muted">

@@ -15,6 +15,21 @@
     <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <script>
+      function callAwsLambdaFunction() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("myDiv").innerHTML = this.responseText;
+              }
+          };
+          xhttp.open("GET", "https://hshiywqtmf.execute-api.us-west-2.amazonaws.com/default/IoTMemeGenerator", true);
+          xhttp.send();
+
+      }
+
+    </script>  
+
 
     <style>
       .bd-placeholder-img {
@@ -31,6 +46,14 @@
           font-size: 3.5rem;
         }
       }
+
+      .my-wrapper img:hover {
+        opacity: 0.4;
+      }
+
+      #progress-bar {
+        margin-top: 1em;
+      }
     </style>
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
@@ -44,6 +67,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
       <a class="nav-item nav-link" href="https://github.com/mfmeza231">GitHub</a>
       <a class="nav-item nav-link" href="{% static 'Matthew_Meza_Resume.pdf' %}">Resume</a>
       <a class="nav-item nav-link active" href="{% url 'allmemes' %}">Iot Example</a>
@@ -54,12 +78,71 @@
 
 <main role="main">
   <div class="container">
-	  <h1 class="text-center pt-3">IoT Meme Project</h1>
-    <p>This is the classic AWS Meme Generator project that can be found at https://acloud.guru/series/acg-projects/view/104. The project is designed to post a meme to a Slack chat everytime an AWS IoT Dashbutton is pressed. This project instead posts the meme here to my website. The additional services required include AWS IoT, Lambda and Kinesis. AWS IoT is used to register the AWS Dashbutton to my AWS account. A Lambda function was created to handle the Dashbutton click event which then generates a meme. Finally, Kinesis handles routing the meme to my PosgreSQL Database in RDS. </p>
+	  <h1 class="text-center pt-3">IoT Meme Generator</h1>
+    <p>This is my take on the classic AWS Meme Generator project that can be found at https://acloud.guru/series/acg-projects/view/104. The original project is designed to post a meme to a Slack chat everytime an AWS IoT Dashbutton is pressed. I have modified the project to instead post the memes here to my website. The services required include AWS IoT, Lambda, S3 and RDS. AWS IoT is used to register the AWS Dashbutton to my AWS account and act as a trigger for my Lambda function. A Lambda function was created to handle the Dashbutton click event which then generates a meme. The meme image is stored in a S3 bucket and a record containing a link to the image is inserted into my PostgreSQL DB located in RDS. This website selects the memes and displays them on the page. The Lambda function can be found in the GitHub link and is stored in S3 then built/deployed using AWS CodeBuild. Still working on making the memes understandable and funny :)</p>
 	  <br />
-	  <br />
+    <h2>AWS Architecture</h2>
+    <hr></hr>
+    <img style="width: 100%; height: 100%;"src="{% static 'AWS_IoT_Meme_Diagram.png' %}" />
+    <hr></hr>
+    <br />
+
+    <div class="container">
+        <h1 class="text-center pt-3">Try It Out!</h1>
+        <h2 style="text-align: center;">(With AWS API Gateway)</h2>
+        <br />
+        <br />
+        <div id="progress-wrapper">
+          <p style="text-align: center;">CLICK THE BUTTON TO GENERATE A MEME</p>
+          <div id="progress-bar-trigger" class="my-wrapper" style="max-height: 205px; max-width: 480px; margin: auto;">
+            <img onclick="callAwsLambdaFunction()" src="{% static 'Dash_Button.png' %}"/>
+          </div>
+          <div id="progress-bar" style="background-color: blue; width: 0%;">&nbsp;</div>
+          <div id="progress-bar-message" style="text-align:center;"></div>
+        </div>
+        <script>
+          var trigger = document.getElementById('progress-bar-trigger');
+          trigger.addEventListener('click', function(e) {
+            document.getElementById('progress-bar-trigger').disabled = 'disabled';
+            var bar = document.getElementById("progress-bar");
+            var barMessage = document.getElementById("progress-bar-message");
+            for (var i = 0; i < 11; i++) {
+              setTimeout(updateProgress, 1000 * i, bar, barMessage, {
+                percent: 10 * i,
+                current: 10 * i,
+                total: 100
+              })
+            }
+          }, {once : true})
+
+          function updateProgress(progressBarElement, progressBarMessageElement, progress) {
+            progressBarElement.style.width = progress.percent + "%";
+            ref_notice = ''
+            if (progress.current >= 100)
+            {
+              progress.current = 100;
+              location.reload();
+              ref_notice = '. Refreshing...'
+            }
+            progressBarMessageElement.innerHTML = progress.current + '% complete' + ref_notice;
+          }
+        </script>  
+
+        <br />
+    </div>
+
+    <br />
 	  <h2>Latest Memes</h2>
 	  <hr></hr>
+    <div class="row">
+      {% for meme in memes.all reversed %}
+      <div class="col-md-4">
+        <a class="card mb-4 shadow-sm" href="{{ meme.s3_url }}">
+          <img class="card-img-top" src="{{ meme.s3_url }}" />
+        </a>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </main>
 
